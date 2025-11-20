@@ -37,7 +37,7 @@ SourceAddressSocketOption::SourceAddressSocketOption(
       policy_fs_(std::move(policy_fs)) {
   ENVOY_LOG(debug,
             "Cilium SourceAddressSocketOption(): source_identity: {}, linger_time: {}, "
-            "source_addresses: {}/{}/{}",
+            "source_addresses: {}/{}/{}", //
             source_identity_, linger_time_,
             original_source_address_ ? original_source_address_->asString() : "",
             ipv4_source_address_ ? ipv4_source_address_->asString() : "",
@@ -74,6 +74,7 @@ bool SourceAddressSocketOption::setOption(
     }
   }
 
+  //
   if (!source_address) {
     ENVOY_LOG(trace, "Skipping restore of local address on socket: {} - no source address",
               socket.ioHandle().fdDoNotUse());
@@ -91,12 +92,14 @@ bool SourceAddressSocketOption::setOption(
       return true;
     }
     // Also skip using the original source address if destination is local.
+    // WHYYYYYYY
     // Local destinations have a policy configured on their address.
-    if (policy_fs_ && policy_fs_->exists(dst_addr)) {
-      ENVOY_LOG(trace, "Skipping restore of local address on socket: {} - destination is local {}",
-                socket.ioHandle().fdDoNotUse(), dst_addr);
-      return true;
-    }
+    // if (policy_fs_ && policy_fs_->exists(dst_addr)) {
+    //   ENVOY_LOG(trace, "Skipping restore of local address on socket: {} - destination is local
+    //   {}",
+    //             socket.ioHandle().fdDoNotUse(), dst_addr);
+    //   return true;
+    // }
   }
 
   // Note: SO_LINGER option is set on the socket of the upstream connection.

@@ -485,7 +485,7 @@ Config::extractSocketMetadata(Network::ConnectionSocket& socket) {
     src_address = nullptr;
   } else if (!use_original_source_address_ || (npmap_ != nullptr && npmap_->exists(other_ip))) {
     // Otherwise only use the original source address if permitted and the destination is not
-    // in the same node.
+    // in the same node. // 
     //
     // If bpf root is not configured (npmap_ == nullptr) we assume all destinations are non-local!
     //
