@@ -41,7 +41,7 @@
 /clang.bazelrc
 
 # generated for docker builds via make
-/SOURCE_VERSION
+# /SOURCE_VERSION
 
 /proxylib/libcilium.so*
 /proxylib/_obj*
